@@ -1,0 +1,28 @@
+<%# 🚨 注意: ここでは @pet という変数にデータが入っていると仮定します %>
+
+<h1>ペット詳細情報: <%= @pet.name %></h1>
+
+<div class="pet-details">
+  <% if @pet.main_image.attached? %>
+    <%= image_tag @pet.main_image, size: "400x400" %>
+  <% else %>
+    <p>[画像なし]</p>
+  <% end %>
+
+  <ul>
+    <li>**名前**: <%= @pet.name %></li>
+    <li>**価格**: <%= @pet.price %>円</li>
+    <li>**生年月日**: <%= @pet.birthday %></li>
+    <li>**ラベル**: <%= @pet.label %></li>
+    <li>**コメント**: <%= @pet.comment %></li>
+  </ul>
+</div>
+
+<hr>
+
+<h2>面会を希望する</h2>
+<%# 面会リクエストフォームへのリンク（ルーティングで設定した URL を利用） %>
+<%= link_to 'このペットの面会をリクエストする', new_pet_meeting_path(@pet) %>
+
+<br>
+<%= link_to '一覧に戻る', pets_path %>

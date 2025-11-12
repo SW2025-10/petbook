@@ -1,0 +1,29 @@
+<%# 🚨 注意: ここでは @pet と @meeting という変数が必要になります %>
+
+<h1><%= @pet.name %> の面会リクエスト</h1>
+
+<%= form_with(model: [@pet, @meeting], local: true) do |form| %>
+  
+  <p>
+    <%= form.label :customer_name, "お客様の名前" %><br>
+    <%= form.text_field :customer_name %>
+  </p>
+
+  <p>
+    <%= form.label :email, "連絡先メールアドレス" %><br>
+    <%= form.email_field :email %>
+  </p>
+  
+  <p>
+    <%= form.label :meeting_datetime, "面会希望日時" %><br>
+    <%# 日時入力フィールド %>
+    <%= form.datetime_select :meeting_datetime %>
+  </p>
+
+  <p>
+    <%= form.submit "面会リクエストを送信する" %>
+  </p>
+
+<% end %>
+
+<%= link_to 'ペット詳細に戻る', pet_path(@pet) %>

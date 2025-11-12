@@ -1,0 +1,26 @@
+<%# 🚨 注意: ここでは @inquiry という変数が必要になります %>
+
+<h1>お問い合わせフォーム</h1>
+
+<%= form_with(model: @inquiry, local: true) do |form| %>
+  
+  <p>
+    <%= form.label :name, "お名前" %><br>
+    <%= form.text_field :name %>
+  </p>
+
+  <p>
+    <%= form.label :email, "メールアドレス" %><br>
+    <%= form.email_field :email %>
+  </p>
+
+  <p>
+    <%= form.label :content, "お問い合わせ内容" %><br>
+    <%= form.text_area :content %>
+  </p>
+
+  <p>
+    <%= form.submit "送信する" %>
+  </p>
+
+<% end %>

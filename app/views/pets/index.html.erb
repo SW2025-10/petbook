@@ -1,0 +1,28 @@
+<h1>ペット一覧</h1>
+<p>気になるペットをクリックして詳細をご覧ください。</p>
+
+<%# 🚨 注意: ここからデータベースから取得したペットのデータを表示する処理が必要です %>
+<%# 仮に @pets という変数にデータが入っていると仮定して記述します %>
+
+<div class="pet-list">
+  <% @pets.each do |pet| %>
+    <div class="pet-item">
+      <h2><%= pet.name %></h2>
+      <%# 画像があれば表示（Active Storageで設定した main_image を使う） %>
+      <% if pet.main_image.attached? %>
+        <%= image_tag pet.main_image, size: "200x200" %>
+      <% else %>
+        <p>[画像なし]</p>
+      <% end %>
+      <p>価格: <%= pet.price %>円</p>
+      
+      <%# ペットの詳細ページへのリンク %>
+      <%= link_to '詳細を見る', pet_path(pet) %>
+    </div>
+  <% end %>
+</div>
+
+<hr>
+
+<%# 新規ペット登録（管理者画面で使うが、今は便宜的に） %>
+<%# <%= link_to '新しいペットを登録', new_pet_path %>
