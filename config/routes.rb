@@ -20,7 +20,12 @@ Rails.application.routes.draw do
   resources :inquiries, only: [:new, :create]
   
   namespace :admin do #これをつかうことで新しくモデル作らずとも管理画面でＰＥＴのモデルを使えるで
-   resources :pets
+   resources :pets do
+     member do
+       post 'hukusei'
+     end
+    end
+   resources :meetings
   end
 
 end

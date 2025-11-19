@@ -1,0 +1,9 @@
+<div class="meeting-index">
+  <% @meetings.each do |meeting| %>
+    <div class="meeting-item">
+      <h2><%= meeting.customer_name %></h2>
+      <p>メールアドレス: <%= meeting.email %>円</p>
+    </div>
+    <hr>
+  <% end %>
+</div>

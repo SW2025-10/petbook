@@ -74,7 +74,7 @@ article {
   <br>
   <li><a href="/">お客様情報</a></li>
   <br>
-  <li><a href="/">お問い合わせ一覧</a></li>
+  <li><a href="/admin/meetings/">お問い合わせ一覧</a></li>
 </div> 
 <div class="container">
   <h2>新しいペットを追加する</h2>
@@ -136,7 +136,10 @@ article {
         <%= link_to '編集', edit_admin_pet_path(pet3) %>
         </p>
         <p>
-        <%= link_to '削除してみろよ', admin_pet_path(pet3), data: { turbo_method: :delete } %>
+        <%= link_to '削除', admin_pet_path(pet3), data: { turbo_method: :delete } %>
+        </p>
+        <p>
+        <%= link_to '複製', admin_pet_path(pet3) %>
         </p>
         </p>
         <br>
@@ -167,7 +170,10 @@ article {
         <%= link_to '編集', edit_admin_pet_path(pet) %>
         </p>
         <p>
-        <%= link_to '削除してみろよ', admin_pet_path(pet), data: { turbo_method: :delete } %>
+        <%= link_to '削除してみよう', admin_pet_path(pet), data: { turbo_method: :delete } %>
+        </p>
+        <p>
+        <%= link_to '複製', hukusei_admin_pet_path(pet),data: { turbo_method: :post} %>
         </p>
         </p>
         <br>

@@ -60,6 +60,21 @@ class Admin::PetsController < ApplicationController
    pet.destroy
    redirect_to '/admin/pets'
   end
+  def hukusei
+    pet = Pet.find(params[:id])
+    @pet = Pet.new
+    @new_pet=Pet.new(
+      id: pet,
+      name: pet.name,
+      price: pet.price,
+      comment: pet.comment,
+      label: pet.label,
+      birthday: pet.birthday,
+    )
+    @new_pet.save
+    # 成功したら、新しいペットの詳細ページへリダイレクト
+    redirect_to '/admin/pets'
+    
+  end
 end
-
 

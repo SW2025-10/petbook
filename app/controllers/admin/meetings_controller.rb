@@ -1,6 +1,6 @@
 # app/controllers/meetings_controller.rb
 
-class MeetingsController < ApplicationController
+class Admin::MeetingsController < ApplicationController
   
   def index
     @meetings = Meeting.all
