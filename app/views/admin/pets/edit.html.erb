@@ -1,0 +1,33 @@
+<h1>ペット追加</h1>
+
+<%= form_with(model: [:admin, @pet]) do |f| %>
+  
+  <p>
+    <%= f.label :name, "お名前" %><br>
+    <%= f.text_field :name %>
+  </p>
+  <p>
+    <%= f.label :price, "値段" %><br>
+    <%= f.text_field :price %>
+  </p>
+  <p>
+    <%= f.label :comment, "一言コメント" %><br>
+    <%= f.text_field :comment %>
+  </p>
+  <p>
+    <%= f.label :label, "ラベル" %><br>
+    <%= f.select :label,
+               ['犬', '猫', 'ハムスター', 'その他'], 
+               { prompt: '選択してください' } 
+               %>
+  </p>
+  <p>
+    <%= f.label :birthday, "誕生日" %><br>
+    <%= f.text_field :birthday %>
+  </p>
+
+  <p>
+    <%= f.submit "送信する" %>
+  </p>
+
+<% end %>

@@ -1,0 +1,44 @@
+<h1>ペット一覧</h1>
+<p>気になるペットをクリックして詳細をご覧ください。</p>
+
+<div class="pet-list">
+  <% @pets.each do |pet| %>
+    <div class="pet-item">
+      <h2><%= pet.name %></h2>
+      <% if pet.main_image.attached? %>
+        <%= image_tag pet.main_image, size: "200x200" %>
+      <% else %>
+        <p>[画像なし]</p>
+      <% end %>
+      <p>価格: <%= pet.price %>円</p>
+      <%= link_to '詳細を見る', pet_path(pet) %>
+    </div>
+  <% end %>
+</div>
+
+
+<hr>
+<h2>ペット検索</h2>
+<%= form_with url: pets_search_path, method: :get do |form| %>
+  <%= form.text_field :query %>
+  <%= form.submit "検索" %>
+<% end %>
+<% if @pet_search %>
+  <% @pet_search.each do |pet2| %>
+    <h3><%= pet2.comment %></h3>
+  <% end %>
+<% end %>
+<hr>
+<h2>ラベル検索</h2>
+
+<%= form_with url: pets_path, method: :get do |form| %>
+  <%= form.text_field :query1 %>
+  <%= form.submit "検索" %>
+<% end %>
+<% if @pet_label %>
+  <% @pet_label.each do |pet3| %>
+    <h3><%= pet3.comment %></h3>
+  <% end %>
+<% end %>
+
+<br>

@@ -1,28 +1,258 @@
-<h1>ペット一覧</h1>
-<p>気になるペットをクリックして詳細をご覧ください。</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ペットショップ情報</title>
+    <style>
+.header1{
+      width: 1800px;
+    height: 150px;
+    background: #ffffff;
+    box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2);
+  position: fixed;
+  z-index: 9999;
+}
+nav li a {
+  padding: 10px 15px; margin-right: 15px; background-color: #33aaff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;
+}
 
-<%# 🚨 注意: ここからデータベースから取得したペットのデータを表示する処理が必要です %>
-<%# 仮に @pets という変数にデータが入っていると仮定して記述します %>
+.container {
+    width: 70%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 9998;
+    padding-top: 150px;
+}
+.floating-button-container {
+  position: fixed;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.floating-contact-button-vertical.style-4 {
+  display: block;
+  background: #33aaff;
+  border: none;
+  border-radius: 12px;
+  padding: 15px 5px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  text-decoration: none;
+  color: white;
+  width: 80px;
+  text-align: center;
+  transition: background-color 0.3s;
+  box-sizing: border-box;
+
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.floating-contact-button-vertical.style-4:hover {
+  background: #5aa75c;
+}
+
+.floating-contact-button-vertical.style-4 .icon-phone-large {
+  font-size: 30px;
+  display: block;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.floating-contact-button-vertical.style-4 .text-vertical {
+  display: block;
+  writing-mode: vertical-rl;
+  line-height: 1.3;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+}
+
+.floating-contact-button-vertical.style-4 .main-text {
+  font-size: 14px;
+  font-weight: bold;
+  display: block;
+}
+
+.floating-contact-button-vertical.style-4 .sub-text {
+  font-size: 10px;
+  display: block;
+  margin-top: 5px;
+}
+.koukoku{
+  position: fixed;
+  left: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.koukoku{
+  display: block;
+  background: #ffffff;
+  border: 2px solid black; 
+  padding: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  text-decoration: none;
+  width: 120px;
+  text-align: center;
+  transition: background-color 0.3s;
+  box-sizing: border-box;
+
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.koukoku.main-text{
+  font-size: 14px;
+  font-weight: bold;
+  display: block;
+}
+</style>
+</head>
+<div class="header1">
+<header>
+    <h1>ペットショップ情報</h1>
+    <nav>
+        <ul>
+            <li><a href="/admin/pets">管理者ページ</a></li>
+        </ul>
+    </nav>
+</header>
+</div>
+<body>
+<div class="container">
+
+<h2>ペット検索</h2>
+<%= form_with url: pets_search_path, method: :get do |form| %>
+  <%= form.text_field :query %>
+  <%= form.submit "検索" %>
+<% end %>
+<% if @pet_search %>
+  <% @pet_search.each do |pet2| %>
+    <ul>
+    <li>名前: <%= pet2.name %></li>
+    <li>価格: <%= pet2.price %>円</li>
+    <li>生年月日: <%= pet2.birthday %></li>
+    <li>ラベル: <%= pet2.label %></li>
+    <li>コメント: <%= pet2.comment %></li>
+  　</ul>
+  <% end %>
+<% end %>
+<hr>
+<h2>ラベル検索</h2>
+<%= link_to '猫', pets_path(query1: '猫'), 
+      style: "padding: 10px 15px; margin-right: 15px; background-color: #33aaff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
+<%= link_to '犬', pets_path(query1: '犬'), 
+      style: "padding: 10px 15px; margin-right: 15px; background-color: #33aaff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
+<%= link_to 'ハムスター', pets_path(query1: 'ハムスター'), 
+      style: "padding: 10px 15px; background-color: #33aaff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
+<% if @pet_label %>
+  <% @pet_label.each do |pet3| %>
+    <ul>
+    <li>名前: <%= pet3.name %></li>
+    <li>価格: <%= pet3.price %>円</li>
+    <li>生年月日: <%= pet3.birthday %></li>
+    <li>ラベル: <%= pet3.label %></li>
+    <li>コメント: <%= pet3.comment %></li>
+  </ul>
+  <% end %>
+<% end %>
+<p>気になるペットをクリックして詳細をご覧ください。</p>
 
 <div class="pet-list">
   <% @pets.each do |pet| %>
     <div class="pet-item">
       <h2><%= pet.name %></h2>
-      <%# 画像があれば表示（Active Storageで設定した main_image を使う） %>
       <% if pet.main_image.attached? %>
         <%= image_tag pet.main_image, size: "200x200" %>
       <% else %>
         <p>[画像なし]</p>
       <% end %>
+      <% is_liked = cookies[:liked_pets].to_s.split(',').include?(pet.id.to_s) %>
+      <% if is_liked %>
+        <%= button_to '❤️ いいね解除', like_pet_path(pet), method: :post %>
+      <% else %>
+        <%= button_to '🤍 いいねする', like_pet_path(pet), method: :post %>
+      <% end %>
       <p>価格: <%= pet.price %>円</p>
-      
-      <%# ペットの詳細ページへのリンク %>
       <%= link_to '詳細を見る', pet_path(pet) %>
     </div>
+    <hr>
   <% end %>
 </div>
 
+</div>
 <hr>
 
-<%# 新規ペット登録（管理者画面で使うが、今は便宜的に） %>
-<%# <%= link_to '新しいペットを登録', new_pet_path %>
+</body>
+
+<br>
+<div class="floating-button-container">
+    <a href="tel:08061944089" class="floating-contact-button-vertical style-4">
+    <span class="icon-phone-large">📞</span>
+    <span class="text-vertical">
+      <span class="main-text">お気軽に相談</span>
+      <span class="sub-text">受付 8:00～23:00</span>
+    </span>
+  </a>
+
+</div>
+<div class="koukoku">
+      <span class="main-text1">広告配信枠</span>
+      <span class="sub-text1"> </span>
+
+</div>
+
+<script>
+ window.difyChatbotConfig = {
+  token: 'erUUHO02R9mIBDh6',
+  inputs: {
+    // You can define the inputs from the Start node here
+    // key is the variable name
+    // e.g.
+    // name: "NAME"
+  },
+  systemVariables: {
+    // user_id: 'YOU CAN DEFINE USER ID HERE',
+    // conversation_id: 'YOU CAN DEFINE CONVERSATION ID HERE, IT MUST BE A VALID UUID',
+  },
+  userVariables: {
+    // avatar_url: 'YOU CAN DEFINE USER AVATAR URL HERE',
+    // name: 'YOU CAN DEFINE USER NAME HERE',
+  },
+ }
+</script>
+<script
+ src="https://udify.app/embed.min.js"
+ id="erUUHO02R9mIBDh6"
+ defer>
+</script>
+<style>
+  #dify-chatbot-bubble-button {
+    background-color: #1C64F2 !important;
+    width:10%;
+    height:10%;
+    right: 25px;
+    top: 70%;
+    
+    
+  }
+  #dify-chatbot-bubble-window {
+    width: 20rem !important;
+    height: 30rem !important;
+  }
+</style>

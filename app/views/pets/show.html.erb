@@ -1,4 +1,3 @@
-<%# 🚨 注意: ここでは @pet という変数にデータが入っていると仮定します %>
 
 <h1>ペット詳細情報: <%= @pet.name %></h1>
 
@@ -10,19 +9,54 @@
   <% end %>
 
   <ul>
-    <li>**名前**: <%= @pet.name %></li>
-    <li>**価格**: <%= @pet.price %>円</li>
-    <li>**生年月日**: <%= @pet.birthday %></li>
-    <li>**ラベル**: <%= @pet.label %></li>
-    <li>**コメント**: <%= @pet.comment %></li>
+    <li>名前: <%= @pet.name %></li>
+    <li>価格: <%= @pet.price %>円</li>
+    <li>生年月日: <%= @pet.birthday %></li>
+    <li>ラベル: <%= @pet.label %></li>
+    <li>コメント: <%= @pet.comment %></li>
   </ul>
 </div>
 
 <hr>
+<h2>お客様コメント一覧</h2>
+
 
 <h2>面会を希望する</h2>
-<%# 面会リクエストフォームへのリンク（ルーティングで設定した URL を利用） %>
 <%= link_to 'このペットの面会をリクエストする', new_pet_meeting_path(@pet) %>
 
 <br>
 <%= link_to '一覧に戻る', pets_path %>
+
+<script>
+ window.difyChatbotConfig = {
+  token: 'erUUHO02R9mIBDh6',
+  inputs: {
+    // You can define the inputs from the Start node here
+    // key is the variable name
+    // e.g.
+    // name: "NAME"
+  },
+  systemVariables: {
+    // user_id: 'YOU CAN DEFINE USER ID HERE',
+    // conversation_id: 'YOU CAN DEFINE CONVERSATION ID HERE, IT MUST BE A VALID UUID',
+  },
+  userVariables: {
+    // avatar_url: 'YOU CAN DEFINE USER AVATAR URL HERE',
+    // name: 'YOU CAN DEFINE USER NAME HERE',
+  },
+ }
+</script>
+<script
+ src="https://udify.app/embed.min.js"
+ id="erUUHO02R9mIBDh6"
+ defer>
+</script>
+<style>
+  #dify-chatbot-bubble-button {
+    background-color: #1C64F2 !important;
+  }
+  #dify-chatbot-bubble-window {
+    width: 24rem !important;
+    height: 40rem !important;
+  }
+</style>

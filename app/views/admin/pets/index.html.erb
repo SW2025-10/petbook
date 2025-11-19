@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ペットショップ情報</title>
+    <style>
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #000000;
+    color: white;
+    padding: 10px 20px;
+    box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2);
+}
+.nav {
+    display: flex;
+    color: white;
+}
+.container {
+    width: 70%;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.side {
+    background-color: #C0C0C0;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    margin-top: 10px;
+    width: 200px;
+    height: 550px;
+    text-align: center;
+    position: fixed;
+    box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2);
+}
+.content {
+    background-color: #b3d874;
+    width: 250px;
+    text-align: center;
+    margin-left: 20px;
+}
+article {
+    display: flex;
+}
+.pet-item {
+    display: flex;
+    gap: 20px;
+}
+
+    </style>
+
+</head>
+<body>
+<header>
+    <h1>管理画面</h1>
+    <nav>
+        <ul>
+            <li><a href="/admin/pets">管理者ページ</a></li>
+            <li><a href="/">通常ページ</a></li>
+        </ul>
+    </nav>
+</header>
+<article>
+<div class="side">
+  <p>サイドバー</p>
+  <li><a href="/admin/pets">管理者ページ</a></li>
+  <br>
+  <li><a href="/">通常ページ</a></li>
+  <br>
+  <li><a href="/admin/pets">ペット一覧</a></li>
+  <br>
+  <li><a href="/">データ</a></li>
+  <br>
+  <li><a href="/">お客様情報</a></li>
+  <br>
+  <li><a href="/">お問い合わせ一覧</a></li>
+</div> 
+<div class="container">
+  <h2>新しいペットを追加する</h2>
+  <%= link_to 'ペットを追加する', new_admin_pet_path(@pet),style: "padding: 10px 15px; background-color: #33aaff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
+  <h2>ペット検索</h2>
+  <%= form_with url: admin_pets_search_path, method: :get do |form| %>
+    <%= form.text_field :query %>
+    <%= form.submit "検索" %>
+  <% end %>
+  <% if @pet_search %>
+    <% @pet_search.each do |pet2| %>
+      <div class="pet-item">
+        <h2><%= pet2.name %></h2>
+        <% if pet2.main_image.attached? %>
+          <%= image_tag pet2.main_image, size: "200x200" %>
+        <% else %>
+          <p>[画像なし]</p>
+        <% end %>
+        <p>価格: <%= pet2.price %>円</p>
+        <p>
+        <p>
+        <%= link_to '詳細', admin_pet_path(pet2) %>
+        </p>
+        <p>
+        <%= link_to '編集', edit_admin_pet_path(pet2) %>
+        </p>
+        <p>
+        <%= link_to '削除してみろよ', admin_pet_path(pet2), data: { turbo_method: :delete } %>
+        </p>
+        </p>
+        <br>
+        
+      </div>
+    <% end %>
+  <% end %>
+  <hr>
+  <h2>ラベル検索</h2>
+  <%= link_to '猫', admin_pets_path(query1: '猫'), 
+        style: "padding: 10px 15px; margin-right: 15px; background-color: #33aaff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
+  <%= link_to '犬', admin_pets_path(query1: '犬'), 
+        style: "padding: 10px 15px; margin-right: 15px; background-color: #33aaff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
+  <%= link_to 'ハムスター', admin_pets_path(query1: 'ハムスター'), 
+        style: "padding: 10px 15px; background-color: #33aaff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
+  <% if @pet_label %>
+    <% @pet_label.each do |pet3| %>
+    <div class="pet-item">
+        <h2><%= pet3.name %></h2>
+        <% if pet3.main_image.attached? %>
+          <%= image_tag pet3.main_image, size: "200x200" %>
+        <% else %>
+          <p>[画像なし]</p>
+        <% end %>
+        <p>価格: <%= pet3.price %>円</p>
+        <p>
+        <p>
+        <%= link_to '詳細', admin_pet_path(pet3) %>
+        </p>
+        <p>
+        <%= link_to '編集', edit_admin_pet_path(pet3) %>
+        </p>
+        <p>
+        <%= link_to '削除してみろよ', admin_pet_path(pet3), data: { turbo_method: :delete } %>
+        </p>
+        </p>
+        <br>
+        
+      </div>
+    <% end %>
+  <% end %>
+  
+  <br>
+  <hr>
+  <h2>ペット一覧</h2>
+  <br>
+  <div class="pet-list">
+    <% @pets.each do |pet| %>
+      <div class="pet-item">
+        <h2><%= pet.name %></h2>
+        <% if pet.main_image.attached? %>
+          <%= image_tag pet.main_image, size: "200x200" %>
+        <% else %>
+          <p>[画像なし]</p>
+        <% end %>
+        <p>価格: <%= pet.price %>円</p>
+        <p>
+        <p>
+        <%= link_to '詳細', admin_pet_path(pet) %>
+        </p>
+        <p>
+        <%= link_to '編集', edit_admin_pet_path(pet) %>
+        </p>
+        <p>
+        <%= link_to '削除してみろよ', admin_pet_path(pet), data: { turbo_method: :delete } %>
+        </p>
+        </p>
+        <br>
+        
+      </div>
+    <hr>
+    <% end %>
+  </div>
+  
+  
+  <hr>
+
+</div>
+
+
+</article>
