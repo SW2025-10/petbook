@@ -13,6 +13,10 @@ class PetsController < ApplicationController
   def urugawa
     
   end
+  
+  def test22
+    
+  end
 
 
   def show
