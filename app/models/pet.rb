@@ -1,6 +1,7 @@
 class Pet < ApplicationRecord
   # このペットは多くの面会(meetings)を持つことができる
   has_many :meetings
+  has_many :comments, dependent: :destroy
   
   # このペットは1つの画像(main_image)を持つ
   # (Active Storage の設定)

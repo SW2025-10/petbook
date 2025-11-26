@@ -1,0 +1,15 @@
+class Admin::InquiriesController < ApplicationController
+  def index
+    @inquiries = Inquiry.all.order(created_at: :desc)
+  end
+
+  def show
+    @inquiry = Inquiry.find(params[:id])
+  end
+
+  def destroy
+    @inquiry = Inquiry.find(params[:id])
+    @inquiry.destroy
+    redirect_to admin_inquiries_path, notice: "お問い合わせを削除しました"
+  end
+end

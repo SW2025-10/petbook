@@ -18,7 +18,38 @@
 </div>
 
 <hr>
-<h2>お客様コメント一覧</h2>
+
+
+<h3>コメントを投稿する</h3>
+
+<%= form_with(model: [@pet, Comment.new], local: true) do |f| %>
+  <div>
+    <%= f.label :name, "名前" %><br>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :content, "コメント内容" %><br>
+    <%= f.text_area :content %>
+  </div>
+
+  <%= f.submit "投稿する" %>
+<% end %>
+
+<hr>
+
+<h3>お客様コメント一覧</h3>
+
+<% @pet.comments.order(created_at: :desc).each do |comment| %>
+  <p>
+    <strong><%= comment.name %></strong>：
+    <%= comment.content %><br>
+    <small><%= comment.created_at.strftime('%Y/%m/%d %H:%M') %></small>
+  </p>
+  <hr>
+<% end %>
+
+
 
 
 <h2>面会を希望する</h2>

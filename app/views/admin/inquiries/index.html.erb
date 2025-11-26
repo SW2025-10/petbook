@@ -1,0 +1,26 @@
+<h1>お問い合わせ一覧</h1>
+
+<table border="1" cellpadding="8">
+  <tr>
+    <th>ID</th>
+    <th>名前</th>
+    <th>メール</th>
+    <th>受信日時</th>
+    <th>操作</th>
+  </tr>
+
+  <% @inquiries.each do |inq| %>
+    <tr>
+      <td><%= inq.id %></td>
+      <td><%= inq.name %></td>
+      <td><%= inq.email %></td>
+      <td><%= inq.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+      <td>
+        <%= link_to "確認", admin_inquiry_path(inq) %> |
+        <%= link_to "削除", admin_inquiry_path(inq), method: :delete, data: { confirm: "削除しますか？" } %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<%= link_to "管理者画面に戻る", admin_pets_path %>

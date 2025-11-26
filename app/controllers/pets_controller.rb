@@ -42,5 +42,9 @@ class PetsController < ApplicationController
       expires: 30.days.from_now,
     }
   end
+  
+  def inquiry
+    @inquiry = Inquiry.new
+  end
     
 end

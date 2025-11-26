@@ -60,6 +60,10 @@ class Admin::PetsController < ApplicationController
    pet.destroy
    redirect_to '/admin/pets'
   end
+  #inquiryを追加
+  def inquiry
+    #@inquiry = Inquiry.new
+  end
 end
 
 
