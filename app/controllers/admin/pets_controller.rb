@@ -72,7 +72,6 @@ class Admin::PetsController < ApplicationController
       birthday: pet.birthday,
     )
     @new_pet.save
-    # 成功したら、新しいペットの詳細ページへリダイレクト
     redirect_to '/admin/pets'
     
   end

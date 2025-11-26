@@ -17,6 +17,7 @@ class PetsController < ApplicationController
 
   def show
     @pet = Pet.find(params[:id]) 
+    @pet.increment!(:views_count)
   end
   #ここはあんまりスマートじゃないあとでなおす
   #現状はラベル検索で放置している

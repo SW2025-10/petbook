@@ -162,6 +162,7 @@ article {
           <p>[画像なし]</p>
         <% end %>
         <p>価格: <%= pet.price %>円</p>
+        <p>👀 閲覧数: <%= pet.views_count %> 回</p>
         <p>
         <p>
         <%= link_to '詳細', admin_pet_path(pet) %>
