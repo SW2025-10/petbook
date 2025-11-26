@@ -13,7 +13,11 @@ class PetsController < ApplicationController
   def urugawa
     
   end
-
+  def iineitiran
+    liked_pets_string = cookies[:liked_pets]
+    liked_ids = liked_pets_string.to_s.split(',').compact_blank
+    @liked_pets = Pet.where(id: liked_ids)
+  end
 
   def show
     @pet = Pet.find(params[:id]) 

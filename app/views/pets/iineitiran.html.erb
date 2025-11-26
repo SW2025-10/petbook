@@ -1,0 +1,15 @@
+<h1>❤️ いいねしたペット一覧</h1>
+
+<% if @liked_pets.empty? %>
+  <p>いいねしたペットはまだいません。</p>
+<% else %>
+  <div class="pet-list">
+    <% @liked_pets.each do |pet| %>
+      <div class="pet-item">
+        <h2><%= pet.name %></h2>
+        <p>価格: <%= pet.price %>円</p>
+        <%= link_to '詳細を見る', pet_path(pet) %>
+      </div>
+    <% end %>
+  </div>
+<% end %>

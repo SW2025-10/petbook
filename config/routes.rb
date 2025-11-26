@@ -7,6 +7,8 @@ Rails.application.routes.draw do
   
   get 'pets/urugawa', to: 'pets#urugawa'
   
+  get 'pets/iineitiran', to: 'pets#iineitiran'
+  
 
 
   resources :pets,  only: [:index, :show,:create] do
