@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   root 'pets#index'
   
   get 'admin/pets/search', to: 'admin/pets#search'
