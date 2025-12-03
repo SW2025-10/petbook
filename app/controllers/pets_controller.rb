@@ -22,6 +22,8 @@ class PetsController < ApplicationController
   def show
     @pet = Pet.find(params[:id]) 
     @pet.increment!(:views_count)
+    log = @pet.view_logs.find_or_initialize_by(viewed_on: Date.current)
+    ViewLog.create(pet: @pet, viewed_on: Date.current)
   end
   #ここはあんまりスマートじゃないあとでなおす
   #現状はラベル検索で放置している

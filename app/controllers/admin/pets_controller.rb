@@ -1,5 +1,4 @@
 
-
 class Admin::PetsController < ApplicationController
   
   def index
@@ -74,6 +73,13 @@ class Admin::PetsController < ApplicationController
     @new_pet.save
     redirect_to '/admin/pets'
     
+  end
+  def daily_views
+    @pet = Pet.find(params[:id])
+    
+    @daily_view_counts = @pet.view_logs
+                              .group(:viewed_on)
+                              .count
   end
 end
 

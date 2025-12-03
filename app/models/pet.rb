@@ -5,4 +5,5 @@ class Pet < ApplicationRecord
   # このペットは1つの画像(main_image)を持つ
   # (Active Storage の設定)
   has_one_attached :main_image
+  has_many :view_logs
 end

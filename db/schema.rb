@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_11_26_081532) do
+ActiveRecord::Schema[8.0].define(version: 2025_12_03_064542) do
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -68,7 +68,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_11_26_081532) do
     t.integer "views_count", default: 0
   end
 
+  create_table "view_logs", force: :cascade do |t|
+    t.integer "pet_id", null: false
+    t.date "viewed_on"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["pet_id"], name: "index_view_logs_on_pet_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "meetings", "pets"
+  add_foreign_key "view_logs", "pets"
 end

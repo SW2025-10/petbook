@@ -25,6 +25,7 @@ Rails.application.routes.draw do
    resources :pets do
      member do
        post 'hukusei'
+       get 'daily_views'
      end
     end
    resources :meetings
