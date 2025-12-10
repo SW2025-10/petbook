@@ -38,34 +38,27 @@
     <canvas id="dailyViewsChart"></canvas>
 
 <script>
-// ----------------------------------------------------
-// RubyデータをJavaScriptで使えるように展開する（重要）
-// ----------------------------------------------------
 
-// 1. ラベル（日付）の配列を展開
-// to_json を使うことで、Rubyの配列をJavaScriptの配列 [..., ...] に変換します
 const chartLabels = <%= @chart_labels.to_json.html_safe %>; 
 
-// 2. データ（カウント数）の配列を展開
+
 const chartData = <%= @chart_data.to_json.html_safe %>; 
 
 
 // ----------------------------------------------------
-// 3. Chart.jsのデータ構造に組み込む
 // ----------------------------------------------------
 const ctx = document.getElementById('dailyViewsChart').getContext('2d');
 const myChart = new Chart(ctx, {
     type: "bar",
     data: {
-      // 🔥 ここに Rubyから渡された chartLabels をセット 🔥
+
       labels: chartLabels, 
       
       datasets: [{
         label: "日別アクセス合計数",
-        // 🔥 ここに Rubyから渡された chartData をセット 🔥
         data: chartData,
         
-        // 色は一旦シンプルに統一するか、そのまま使います
+
         backgroundColor: "rgba(54, 162, 235, 0.5)",
         borderColor: "rgba(54, 162, 235, 1)",
         borderWidth: 1,
