@@ -23,7 +23,13 @@ Rails.application.routes.draw do
   resources :inquiries, only: [:new, :create]
   
   namespace :admin do #これをつかうことで新しくモデル作らずとも管理画面でＰＥＴのモデルを使えるで
+   
+   
+   
    resources :pets do
+     collection do
+      get 'view_all'
+     end
      member do
        post 'hukusei'
        get 'daily_views'

@@ -76,10 +76,24 @@ class Admin::PetsController < ApplicationController
   end
   def daily_views
     @pet = Pet.find(params[:id])
-    
     @daily_view_counts = @pet.view_logs
                               .group(:viewed_on)
                               .count
+  end
+  
+  def view_all
+   # 1. 日付順にグループ化・カウントしてハッシュを取得
+   daily_counts_hash = ViewLog.group(:viewed_on).order(:viewed_on).count
+
+  # 2. ハッシュから、グラフの軸に使うための2つの配列（ラベルとデータ）に分割する
+  #    keys: 日付（ラベル）の配列
+  #    values: カウント数（データ）の配列
+  
+   # @chart_labels : ["2025-12-08", "2025-12-09", ...]
+   @chart_labels = daily_counts_hash.keys
+  
+   # @chart_data : [12, 5, 18, ...]
+   @chart_data = daily_counts_hash.values 
   end
 end
 
