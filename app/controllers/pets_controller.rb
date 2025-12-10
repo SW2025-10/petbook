@@ -5,6 +5,11 @@ class PetsController < ApplicationController
     if params[:query1].present?
       @pet_label = Pet.where(label: params[:query1])
     end
+    
+    liked_ids = liked_pet_ids
+    @pets = @pets.sort_by { |p| liked_ids.include?(p.id) ? 0 : 1 }
+    
+    @survey = Survey.first # ここで対象のアンケートを取得
   end
   
   def create
@@ -45,6 +50,16 @@ class PetsController < ApplicationController
   
   def inquiry
     @inquiry = Inquiry.new
+  end
+  
+  private
+
+  def set_pet
+    @pet = Pet.find(params[:id])
+  end
+
+  def liked_pet_ids
+    cookies[:liked_pets].to_s.split(',').map(&:to_i)
   end
     
 end

@@ -1,0 +1,15 @@
+<h1><%= @survey.title %></h1>
+
+<%= form_with model: [@survey, @response], local: true do |f| %>
+  <% @response.answers.each_with_index do |answer, idx| %>
+    <p><%= idx + 1 %>. <%= answer.question.content %></p>
+    <%= f.fields_for :answers, answer do |af| %>
+      <%= af.hidden_field :question_id %>
+      <label><%= af.radio_button :score, 1 %> はい</label>
+      <label><%= af.radio_button :score, 0 %> いいえ</label>
+    <% end %>
+  <% end %>
+  <br>
+  <br>
+  <%= f.submit "診断する" %>
+<% end %>

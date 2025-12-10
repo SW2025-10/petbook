@@ -29,5 +29,10 @@ Rails.application.routes.draw do
    #adminのinquireを追加
    resources :inquiries, only: [:index, :show, :destroy]
   end
+  
+  resources :surveys do
+    resources :responses
+  end
+
 
 end

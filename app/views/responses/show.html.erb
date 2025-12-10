@@ -1,0 +1,6 @@
+<h1>診断結果</h1>
+<p>得点: <%= @response.total_score %> 点</p>
+<p>おすすめペット: <strong><%= @response.result %></strong></p>
+
+<br>
+<%= link_to "一覧に戻る", pets_path %>
