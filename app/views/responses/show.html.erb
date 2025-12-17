@@ -1,6 +1,28 @@
 <h1>診断結果</h1>
 <p>得点: <%= @response.total_score %> 点</p>
-<p>おすすめペット: <strong><%= @response.result %></strong></p>
+<p>
+    
+    おすすめペット:
+    <% case @response.total_score %>
+    <% when 1..3 %>
+        <strong>
+            <%= link_to @response.result, pets_path(query1:"ハムスター") %>
+        </strong>
+    <% when 4..6 %>
+        <strong>
+            <%= link_to @response.result, pets_path(query1:"猫") %>
+        </strong>
+    <% when 7..10 %>
+        <strong>
+            <%= link_to @response.result, pets_path(query1:"犬") %>
+        </strong>
+    <% else %>
+        <strong>
+            <%= link_to @response.result, pets_path %>
+        </strong>
+    <% end %>
+
+</p>
 
 <br>
 <%= link_to "一覧に戻る", pets_path %>
