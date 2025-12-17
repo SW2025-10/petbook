@@ -1,195 +1,329 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
-    <title>ペットショップ情報</title>
+    <title>ペットショップ管理画面</title>
     <style>
-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #000000;
-    color: white;
-    padding: 10px 20px;
-    box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2);
-}
-.nav {
-    display: flex;
-    color: white;
-}
-.container {
-    width: 70%;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-}
-.side {
-    background-color: #C0C0C0;
-    border-radius: 10px;
-    border: 1px solid #ccc;
-    margin-top: 10px;
-    width: 200px;
-    height: 550px;
-    text-align: center;
-    position: fixed;
-    box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2);
-}
-.content {
-    background-color: #b3d874;
-    width: 250px;
-    text-align: center;
-    margin-left: 20px;
-}
-article {
-    display: flex;
-}
-.pet-item {
-    display: flex;
-    gap: 20px;
-}
+        :root {
+            --primary-color: #33aaff;
+            --primary-hover: #2288dd;
+            --danger-color: #ff4d4d;
+            --danger-hover: #cc0000;
+            --bg-color: #f4f7f6;
+            --sidebar-bg: #2c3e50;
+            --sidebar-text: #ecf0f1;
+            --card-bg: #ffffff;
+            --text-color: #333;
+            --border-radius: 8px;
+            --shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+        }
+
+        /* レイアウト全体 */
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            min-height: 100vh;
+        }
+
+        /* サイドバー */
+        .sidebar {
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .sidebar h2 {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            padding-bottom: 10px;
+        }
+
+        .sidebar ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            color: var(--sidebar-text);
+            text-decoration: none;
+            display: block;
+            padding: 10px;
+            border-radius: var(--border-radius);
+            transition: background 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: rgba(255,255,255,0.1);
+        }
+
+        /* メインコンテンツ */
+        .main-content {
+            padding: 30px;
+            overflow-y: auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background-color: var(--card-bg);
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+
+        h1, h2 {
+            margin: 0;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #444;
+        }
+
+        /* 検索・フィルターエリア */
+        .toolbar {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .search-form {
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-form input[type="text"] {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        /* カードグリッド */
+        .pet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        /* ペットカード */
+        .pet-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.2s;
+        }
+
+        .pet-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .pet-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+
+        .pet-info {
+            padding: 15px;
+            flex-grow: 1;
+        }
+
+        .pet-info h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.2rem;
+        }
+
+        .pet-meta {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 15px;
+        }
+
+        .pet-actions {
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #eee;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            justify-content: space-between;
+        }
+
+        /* ボタン共通スタイル */
+        .btn {
+            display: inline-block;
+            padding: 8px 16px;
+            font-size: 0.9rem;
+            text-decoration: none;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        .btn-primary:hover { background-color: var(--primary-hover); }
+
+        .btn-secondary {
+            background-color: #95a5a6;
+            color: white;
+        }
+        .btn-secondary:hover { background-color: #7f8c8d; }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+        .btn-danger:hover { background-color: var(--danger-hover); }
+
+        .btn-sm {
+            padding: 5px 10px;
+            font-size: 0.8rem;
+        }
+        
+        hr {
+            border: 0;
+            height: 1px;
+            background: #ddd;
+            margin: 40px 0;
+        }
 
     </style>
-
 </head>
 <body>
-<header>
-    <h1>管理画面</h1>
-    <nav>
-        <ul>
-            <li><a href="/admin/pets">管理者ページ</a></li>
-            <li><a href="/">通常ページ</a></li>
-        </ul>
-    </nav>
-</header>
-<article>
-<div class="side">
-  <p>サイドバー</p>
-  <li><a href="/admin/pets">管理者ページ</a></li>
-  <br>
-  <li><a href="/">通常ページ</a></li>
-  <br>
-  <li><a href="/admin/pets">ペット一覧</a></li>
-  <br>
-  <li><a href="/">データ</a></li>
-  <br>
-  <li><a href="/">お客様情報</a></li>
-  <br>
-  <li><%= link_to '📈 データ分析', view_all_admin_pets_path() %></li>
-  <br>
-  <li><a href="/admin/meetings/">お問い合わせ一覧</a></li>
-</div> 
-<div class="container">
-  <h2>新しいペットを追加する</h2>
-  <%= link_to 'ペットを追加する', new_admin_pet_path(@pet),style: "padding: 10px 15px; background-color: #33aaff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
-  <h2>ペット検索</h2>
-  <%= form_with url: admin_pets_search_path, method: :get do |form| %>
-    <%= form.text_field :query %>
-    <%= form.submit "検索" %>
-  <% end %>
-  <% if @pet_search %>
-    <% @pet_search.each do |pet2| %>
-      <div class="pet-item">
-        <h2><%= pet2.name %></h2>
-        <% if pet2.main_image.attached? %>
-          <%= image_tag pet2.main_image, size: "200x200" %>
-        <% else %>
-          <p>[画像なし]</p>
-        <% end %>
-        <p>価格: <%= pet2.price %>円</p>
-        <p>
-        <p>
-        <%= link_to '詳細', admin_pet_path(pet2) %>
-        </p>
-        <p>
-        <%= link_to '編集', edit_admin_pet_path(pet2) %>
-        </p>
-        <p>
-        <%= link_to '削除してみろよ', admin_pet_path(pet2), data: { turbo_method: :delete } %>
-        </p>
-        </p>
-        <br>
-        
-      </div>
-    <% end %>
-  <% end %>
-  <hr>
-  <h2>ラベル検索</h2>
-  <%= link_to '猫', admin_pets_path(query1: '猫'), 
-        style: "padding: 10px 15px; margin-right: 15px; background-color: #33aaff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
-  <%= link_to '犬', admin_pets_path(query1: '犬'), 
-        style: "padding: 10px 15px; margin-right: 15px; background-color: #33aaff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
-  <%= link_to 'ハムスター', admin_pets_path(query1: 'ハムスター'), 
-        style: "padding: 10px 15px; background-color: #33aaff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
-  <% if @pet_label %>
-    <% @pet_label.each do |pet3| %>
-    <div class="pet-item">
-        <h2><%= pet3.name %></h2>
-        <% if pet3.main_image.attached? %>
-          <%= image_tag pet3.main_image, size: "200x200" %>
-        <% else %>
-          <p>[画像なし]</p>
-        <% end %>
-        <p>価格: <%= pet3.price %>円</p>
-        <p>
-        <p>
-        <%= link_to '詳細', admin_pet_path(pet3) %>
-        </p>
-        <p>
-        <%= link_to '編集', edit_admin_pet_path(pet3) %>
-        </p>
-        <p>
-        <%= link_to '削除', admin_pet_path(pet3), data: { turbo_method: :delete } %>
-        </p>
-        <p>
-        <%= link_to '複製', admin_pet_path(pet3) %>
-        </p>
-        </p>
-        <br>
-        
-      </div>
-    <% end %>
-  <% end %>
-  
-  <br>
-  <hr>
-  <h2>ペット一覧</h2>
-  <br>
-  <div class="pet-list">
-    <% @pets.each do |pet| %>
-      <div class="pet-item">
-        <h2><%= pet.name %></h2>
-        <% if pet.main_image.attached? %>
-          <%= image_tag pet.main_image, size: "200x200" %>
-        <% else %>
-          <p>[画像なし]</p>
-        <% end %>
-        <p>価格: <%= pet.price %>円</p>
-        <p>👀 閲覧数: <%= pet.views_count %> 回</p>
-        <p>
-        <p>
-        <%= link_to '詳細', admin_pet_path(pet) %>
-        </p>
-        <p>
-        <%= link_to '編集', edit_admin_pet_path(pet) %>
-        </p>
-        <p>
-        <%= link_to '削除してみよう', admin_pet_path(pet), data: { turbo_method: :delete } %>
-        </p>
-        <p>
-        <%= link_to '複製', hukusei_admin_pet_path(pet),data: { turbo_method: :post} %>
-        </p>
-        </p>
-        <br>
-        
-      </div>
-    <hr>
-    <% end %>
-  </div>
-  
-  
-  <hr>
 
+<div class="admin-layout">
+    <aside class="sidebar">
+        <div style="text-align: center; padding: 20px 0;">
+            <h2>管理メニュー</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="/admin/pets">管理者トップ</a></li>
+                <li><a href="/">通常ページへ戻る</a></li>
+                <li><a href="/admin/pets">ペット一覧</a></li>
+                <li><a href="/">売上データ</a></li>
+                <li><a href="/">顧客情報</a></li>
+                <li><%= link_to '📈 データ分析', view_all_admin_pets_path() %></li>
+                <li><a href="/admin/meetings/">お問い合わせ</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <main class="main-content">
+        <header>
+            <h1>ペット管理ダッシュボード</h1>
+            <div>
+                 <%= link_to '+ 新規登録', new_admin_pet_path(@pet), class: "btn btn-primary" %>
+            </div>
+        </header>
+
+        <div class="toolbar">
+            <div class="search-section">
+                <%= form_with url: admin_pets_search_path, method: :get, class: "search-form" do |form| %>
+                    <%= form.text_field :query, placeholder: "ペット名で検索..." %>
+                    <%= form.submit "検索", class: "btn btn-secondary" %>
+                <% end %>
+            </div>
+            <div class="filter-buttons">
+                <%= link_to '猫', admin_pets_path(query1: '猫'), class: "btn btn-secondary" %>
+                <%= link_to '犬', admin_pets_path(query1: '犬'), class: "btn btn-secondary" %>
+                <%= link_to 'ハムスター', admin_pets_path(query1: 'ハムスター'), class: "btn btn-secondary" %>
+            </div>
+        </div>
+
+        <% if @pet_search.present? %>
+            <h2>🔍 検索結果</h2>
+            <div class="pet-grid">
+                <% @pet_search.each do |pet| %>
+                    <%= render_pet_card(pet) %> <% end %>
+            </div>
+            <hr>
+        <% end %>
+
+        <% if @pet_label.present? %>
+            <h2>🏷 カテゴリ別表示</h2>
+            <div class="pet-grid">
+                <% @pet_label.each do |pet| %>
+                     <%= render_pet_card(pet) %>
+                <% end %>
+            </div>
+            <hr>
+        <% end %>
+
+        <h2>🐾 登録ペット一覧</h2>
+        <div class="pet-grid">
+            <% @pets.each do |pet| %>
+                <div class="pet-card">
+                    <div class="pet-image">
+                        <% if pet.main_image.attached? %>
+                            <%= image_tag pet.main_image, style: "width:100%; height:100%; object-fit:cover;" %>
+                        <% else %>
+                            <span>No Image</span>
+                        <% end %>
+                    </div>
+                    <div class="pet-info">
+                        <h3><%= pet.name %></h3>
+                        <div class="pet-meta">
+                            <p>価格: ¥<%= pet.price.to_s(:delimited) rescue pet.price %></p>
+                            <p>閲覧数: <%= pet.views_count %> 回</p>
+                        </div>
+                    </div>
+                    <div class="pet-actions">
+                        <%= link_to '詳細', admin_pet_path(pet), class: "btn btn-secondary btn-sm" %>
+                        <%= link_to '編集', edit_admin_pet_path(pet), class: "btn btn-primary btn-sm" %>
+                        <%= link_to '複製', hukusei_admin_pet_path(pet), data: { turbo_method: :post }, class: "btn btn-secondary btn-sm" %>
+                        <%= link_to '削除', admin_pet_path(pet), data: { turbo_method: :delete, turbo_confirm: "本当に削除しますか？" }, class: "btn btn-danger btn-sm" %>
+                    </div>
+                </div>
+            <% end %>
+        </div>
+
+    </main>
 </div>
 
-
-</article>
+</body>
+</html>

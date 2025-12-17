@@ -1,265 +1,482 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ペットショップ情報</title>
     <style>
-.header1{
-      width: 1800px;
-    height: 150px;
-    background: #ffffff;
-    box-shadow: 5px 5px 15px 0px rgba(0, 0, 0, 0.2);
-  position: fixed;
-  z-index: 9999;
-}
-nav li a {
-  padding: 10px 15px; margin-right: 15px; background-color: #33aaff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;
-}
+        :root {
+            --primary-color: #33aaff;
+            --accent-color: #ff6b6b;
+            --bg-color: #f9f9f9;
+            --text-main: #333;
+            --text-sub: #666;
+            --card-bg: #ffffff;
+            --header-height: 80px;
+        }
 
-.container {
-    width: 70%;
-    max-width: 900px;
-    margin-left: auto;
-    margin-right: auto;
-    z-index: 9998;
-    padding-top: 150px;
-}
-.floating-button-container {
-  position: fixed;
-  right: 15px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 999;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
+        body {
+            font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+            margin: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            padding-top: var(--header-height);
+        }
 
-.floating-contact-button-vertical.style-4 {
-  display: block;
-  background: #33aaff;
-  border: none;
-  border-radius: 12px;
-  padding: 15px 5px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  text-decoration: none;
-  color: white;
-  width: 80px;
-  text-align: center;
-  transition: background-color 0.3s;
-  box-sizing: border-box;
+        .site-header {
+            width: 100%;
+            height: var(--header-height);
+            background: #ffffff;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            box-sizing: border-box;
+        }
 
-  min-height: 180px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
+        .site-header h1 {
+            margin: 0;
+            font-size: 24px;
+            color: var(--primary-color);
+        }
 
-.floating-contact-button-vertical.style-4:hover {
-  background: #5aa75c;
-}
+        .nav-links a {
+            padding: 10px 20px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: opacity 0.3s;
+        }
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
 
-.floating-contact-button-vertical.style-4 .icon-phone-large {
-  font-size: 30px;
-  display: block;
-  line-height: 1;
-  margin-bottom: 10px;
-}
+        .main-container {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: 30px;
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
 
-.floating-contact-button-vertical.style-4 .text-vertical {
-  display: block;
-  writing-mode: vertical-rl;
-  line-height: 1.3;
-  margin-left: auto;
-  margin-right: auto;
-  color: white;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.1);
-}
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-.floating-contact-button-vertical.style-4 .main-text {
-  font-size: 14px;
-  font-weight: bold;
-  display: block;
-}
+        .sidebar-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #eee;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
 
-.floating-contact-button-vertical.style-4 .sub-text {
-  font-size: 10px;
-  display: block;
-  margin-top: 5px;
-}
-.koukoku{
-  position: fixed;
-  left: 25px;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 999;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.koukoku{
-  display: block;
-  background: #ffffff;
-  border: 2px solid black; 
-  padding: 15px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-  text-decoration: none;
-  width: 120px;
-  text-align: center;
-  transition: background-color 0.3s;
-  box-sizing: border-box;
+        .sidebar-title {
+            font-size: 16px;
+            font-weight: bold;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            margin-top: 0;
+        }
 
-  min-height: 400px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.koukoku.main-text{
-  font-size: 14px;
-  font-weight: bold;
-  display: block;
-}
-</style>
+        .search-form {
+            display: flex;
+            gap: 5px;
+        }
+        .search-form input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .search-form input[type="submit"] {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .category-links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .category-links a {
+            display: block;
+            padding: 10px;
+            background: #f0f8ff;
+            color: var(--primary-color);
+            text-decoration: none;
+            border-radius: 4px;
+            text-align: center;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .category-links a:hover {
+            background: #e0f0ff;
+        }
+
+        .user-menu ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .user-menu li {
+            margin-bottom: 8px;
+        }
+        .user-menu a {
+            color: var(--text-sub);
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .user-menu a:hover {
+            text-decoration: underline;
+        }
+
+        .pet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .pet-card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            position: relative;
+        }
+
+        .pet-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .pet-image-container {
+            width: 100%;
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .pet-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .like-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 10;
+        }
+        .like-badge button {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            font-size: 18px;
+            padding: 0;
+            line-height: 35px;
+        }
+
+        .pet-info {
+            padding: 15px;
+        }
+
+        .pet-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 0 10px 0;
+            color: var(--text-main);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .pet-details-table {
+            width: 100%;
+            font-size: 12px;
+            color: var(--text-sub);
+            margin-bottom: 10px;
+            border-collapse: collapse;
+        }
+        .pet-details-table td {
+            padding: 4px 0;
+        }
+        
+        .pet-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: var(--accent-color);
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .btn-detail {
+            display: block;
+            width: 100%;
+            padding: 10px 0;
+            text-align: center;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .btn-detail:hover {
+            background: #2288dd;
+        }
+
+        .search-result-list ul {
+            padding: 0;
+            list-style: none;
+        }
+        .search-result-list li {
+            background: white;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 5px;
+        }
+
+        .floating-button-container {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 990;
+        }
+
+        .floating-contact-button-vertical {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            width: 70px;
+            padding: 20px 5px;
+            border-radius: 35px;
+            box-shadow: 0 4px 15px rgba(51, 170, 255, 0.4);
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .floating-contact-button-vertical:hover {
+            background: #5aa75c;
+            transform: scale(1.05);
+        }
+        .icon-phone-large {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        .text-vertical {
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            font-size: 14px;
+            font-weight: bold;
+            letter-spacing: 2px;
+        }
+        .sub-text {
+            font-size: 10px;
+            margin-top: 10px;
+            writing-mode: horizontal-tb;
+        }
+
+        #dify-chatbot-bubble-button {
+            bottom: 20px !important;
+            top: auto !important;
+            right: 20px !important;
+            width: 60px !important;
+            height: 60px !important;
+        }
+    </style>
 </head>
-<div class="header1">
-<header>
-    <h1>ペットショップ情報</h1>
-    <nav>
-        <ul>
-            <li><a href="/admin/pets">管理者ページ</a></li>
-        </ul>
-    </nav>
-</header>
-</div>
 <body>
-<div class="container">
 
-<h2>ペット検索</h2>
-<%= form_with url: pets_search_path, method: :get do |form| %>
-  <%= form.text_field :query %>
-  <%= form.submit "検索" %>
-<% end %>
-<% if @pet_search %>
-  <% @pet_search.each do |pet2| %>
-    <ul>
-    <li>名前: <%= pet2.name %></li>
-    <li>価格: <%= pet2.price %>円</li>
-    <li>生年月日: <%= pet2.birthday %></li>
-    <li>ラベル: <%= pet2.label %></li>
-    <li>コメント: <%= pet2.comment %></li>
-  　</ul>
-  <% end %>
-<% end %>
-<hr>
-<h2>ラベル検索</h2>
-<%= link_to '猫', pets_path(query1: '猫'), 
-      style: "padding: 10px 15px; margin-right: 15px; background-color: #33aaff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
-<%= link_to '犬', pets_path(query1: '犬'), 
-      style: "padding: 10px 15px; margin-right: 15px; background-color: #33aaff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
-<%= link_to 'ハムスター', pets_path(query1: 'ハムスター'), 
-      style: "padding: 10px 15px; background-color: #33aaff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold;" %>
-<% if @pet_label %>
-  <% @pet_label.each do |pet3| %>
-    <ul>
-    <li>名前: <%= pet3.name %></li>
-    <li>価格: <%= pet3.price %>円</li>
-    <li>生年月日: <%= pet3.birthday %></li>
-    <li>ラベル: <%= pet3.label %></li>
-    <li>コメント: <%= pet3.comment %></li>
-  </ul>
-  <% end %>
-<% end %>
-<p>気になるペットをクリックして詳細をご覧ください。</p>
+    <header class="site-header">
+        <h1>🐾 ペットショップ情報</h1>
+        <nav class="nav-links">
+            <a href="/admin/pets">管理者ページ</a>
+        </nav>
+    </header>
 
-<div class="pet-list">
-  <% @pets.each do |pet| %>
-    <div class="pet-item">
-      <h2><%= pet.name %></h2>
-      <% if pet.main_image.attached? %>
-        <%= image_tag pet.main_image, size: "200x200" %>
-      <% else %>
-        <p>[画像なし]</p>
-      <% end %>
-      <% is_liked = cookies[:liked_pets].to_s.split(',').include?(pet.id.to_s) %>
-      <% if is_liked %>
-        <%= button_to '❤️ いいね解除', like_pet_path(pet), method: :post %>
-      <% else %>
-        <%= button_to '🤍 いいねする', like_pet_path(pet), method: :post %>
-      <% end %>
-      <p>価格: <%= pet.price %>円</p>
-      <%= link_to '詳細を見る', pet_path(pet) %>
+    <div class="main-container">
+        
+        <aside class="sidebar">
+            
+            <div class="sidebar-box">
+                <h3 class="sidebar-title">キーワード検索</h3>
+                <%= form_with url: pets_search_path, method: :get, class: "search-form" do |form| %>
+                    <%= form.text_field :query, placeholder: "名前など..." %>
+                    <%= form.submit "Go" %>
+                <% end %>
+            </div>
+
+            <div class="sidebar-box">
+                <h3 class="sidebar-title">種類から探す</h3>
+                <div class="category-links">
+                    <%= link_to '🐱 猫を見る', pets_path(query1: '猫') %>
+                    <%= link_to '🐶 犬を見る', pets_path(query1: '犬') %>
+                    <%= link_to '🐹 小動物を見る', pets_path(query1: 'ハムスター') %>
+                </div>
+            </div>
+
+            <div class="sidebar-box user-menu">
+                <h3 class="sidebar-title">マイページ</h3>
+                <ul>
+                    <% if user_signed_in? %>
+                        <li>ようこそ、ユーザー様</li>
+                        <li><%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete }, style: "color: #ff6b6b;" %></li>
+                    <% else %>
+                        <li><%= link_to '新規登録', new_user_registration_path %></li>
+                        <li><%= link_to 'ログイン', new_user_session_path %></li>
+                    <% end %>
+                </ul>
+            </div>
+
+            <div class="sidebar-box" style="text-align: center; background-color: #fff8e1; border: 1px dashed orange;">
+                <span style="font-size:12px; color:#888;">広告</span>
+                <p style="font-weight:bold; color: orange;">春のペットフェア<br>開催中！</p>
+            </div>
+
+        </aside>
+
+        <main class="content">
+
+            <% if @pet_search.present? %>
+                <div class="search-result-list" style="margin-bottom: 30px;">
+                    <h2>🔍 キーワード検索結果</h2>
+                    <% @pet_search.each do |pet| %>
+                        <div style="background:white; padding:15px; border-radius:8px; margin-bottom:10px; display:flex; justify-content:space-between; align-items:center;">
+                            <div>
+                                <strong><%= pet.name %></strong>
+                                <span style="font-size:12px; color:#666;">(<%= pet.label %>)</span>
+                            </div>
+                            <%= link_to '詳細 >', pet_path(pet), style:"color:var(--primary-color); text-decoration:none;" %>
+                        </div>
+                    <% end %>
+                </div>
+                <hr style="border:0; height:1px; background:#ddd; margin:30px 0;">
+            <% end %>
+
+            <% if @pet_label.present? %>
+                <h2>🔍 カテゴリ検索結果</h2>
+                <div class="pet-grid">
+                    <% @pet_label.each do |pet| %>
+                        <div class="pet-card">
+                            <div class="pet-image-container">
+                                <% if pet.main_image.attached? %>
+                                    <%= image_tag pet.main_image %>
+                                <% else %>
+                                    <span style="color:#ccc;">NO IMAGE</span>
+                                <% end %>
+                            </div>
+                            <div class="pet-info">
+                                <h3 class="pet-name"><%= pet.name %></h3>
+                                <div class="pet-price"><%= pet.price.to_s(:delimited) rescue pet.price %>円(税込)</div>
+                                <%= link_to '詳細を見る', pet_path(pet), class: "btn-detail" %>
+                            </div>
+                        </div>
+                    <% end %>
+                </div>
+                <hr style="border:0; height:1px; background:#ddd; margin:30px 0;">
+            <% end %>
+
+            <h2 style="border-left: 5px solid var(--primary-color); padding-left: 15px; margin-bottom: 20px;">新着ペット一覧</h2>
+            
+            <div class="pet-list pet-grid">
+                <% @pets.each do |pet| %>
+                    <div class="pet-card">
+                        <div class="like-badge">
+                            <% is_liked = cookies[:liked_pets].to_s.split(',').include?(pet.id.to_s) %>
+                            <% if is_liked %>
+                                <%= button_to '❤️', like_pet_path(pet), method: :post, title: "いいね解除" %>
+                            <% else %>
+                                <%= button_to '🤍', like_pet_path(pet), method: :post, title: "いいね！" %>
+                            <% end %>
+                        </div>
+
+                        <div class="pet-image-container">
+                            <% if pet.main_image.attached? %>
+                                <%= image_tag pet.main_image %>
+                            <% else %>
+                                <span style="color:#ccc;">No Image</span>
+                            <% end %>
+                        </div>
+
+                        <div class="pet-info">
+                            <h3 class="pet-name"><%= pet.name %></h3>
+                            
+                            <table class="pet-details-table">
+                                <tr>
+                                    <td>種類:</td>
+                                    <td><%= pet.label %></td>
+                                </tr>
+                                <tr>
+                                    <td>誕生日:</td>
+                                    <td><%= pet.birthday %></td>
+                                </tr>
+                            </table>
+
+                            <span class="pet-price">¥<%= pet.price.to_s(:delimited) rescue pet.price %></span>
+
+                            <%= link_to '詳細を見る', pet_path(pet), class: "btn-detail" %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+
+        </main>
     </div>
-    <hr>
-  <% end %>
-</div>
 
-</div>
-<hr>
+    <div class="floating-button-container">
+        <a href="tel:08061944089" class="floating-contact-button-vertical">
+            <span class="icon-phone-large">📞</span>
+            <span class="text-vertical">相談する</span>
+            <span class="sub-text">8:00-23:00</span>
+        </a>
+    </div>
+
+    <script>
+        window.difyChatbotConfig = {
+            token: 'erUUHO02R9mIBDh6',
+            inputs: {},
+            systemVariables: {},
+            userVariables: {},
+        }
+    </script>
+    <script src="https://udify.app/embed.min.js" id="erUUHO02R9mIBDh6" defer></script>
+    <style>
+        #dify-chatbot-bubble-window {
+            width: 350px !important;
+            height: 500px !important;
+            bottom: 90px !important;
+            right: 20px !important;
+        }
+    </style>
 
 </body>
-
-<br>
-<div class="floating-button-container">
-    <a href="tel:08061944089" class="floating-contact-button-vertical style-4">
-    <span class="icon-phone-large">📞</span>
-    <span class="text-vertical">
-      <span class="main-text">お気軽に相談</span>
-      <span class="sub-text">受付 8:00～23:00</span>
-    </span>
-  </a>
-
-</div>
-<div class="koukoku">
-      <span class="main-text1">広告配信枠</span>
-      <span class="sub-text1"> </span>
-      
-      <% if user_signed_in? %>
-  <li><%= link_to 'ログアウト', destroy_user_session_path, data: { turbo_method: :delete } %></li>
-<% else %>
-  <li><%= link_to '新規登録', new_user_registration_path %></li>
-  <li><%= link_to 'ログイン', new_user_session_path %></li>
-<% end %>
-
-</div>
-
-<script>
- window.difyChatbotConfig = {
-  token: 'erUUHO02R9mIBDh6',
-  inputs: {
-    // You can define the inputs from the Start node here
-    // key is the variable name
-    // e.g.
-    // name: "NAME"
-  },
-  systemVariables: {
-    // user_id: 'YOU CAN DEFINE USER ID HERE',
-    // conversation_id: 'YOU CAN DEFINE CONVERSATION ID HERE, IT MUST BE A VALID UUID',
-  },
-  userVariables: {
-    // avatar_url: 'YOU CAN DEFINE USER AVATAR URL HERE',
-    // name: 'YOU CAN DEFINE USER NAME HERE',
-  },
- }
-</script>
-<script
- src="https://udify.app/embed.min.js"
- id="erUUHO02R9mIBDh6"
- defer>
-</script>
-<style>
-  #dify-chatbot-bubble-button {
-    background-color: #1C64F2 !important;
-    width:10%;
-    height:10%;
-    right: 25px;
-    top: 70%;
-    
-    
-  }
-  #dify-chatbot-bubble-window {
-    width: 20rem !important;
-    height: 30rem !important;
-  }
-</style>
+</html>
