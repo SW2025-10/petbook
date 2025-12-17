@@ -451,6 +451,18 @@
 
         </main>
     </div>
+<<<<<<< HEAD
+=======
+    <hr>
+    <br>
+  <% end %>
+  <h2><%= link_to "お問い合わせ", inquiries_inquiry_path %></h2>
+  <% if @survey.present? %>
+    <%= link_to "ペット適性診断を受ける", new_survey_response_path(@survey), class: "btn btn-primary" %>
+  <% end %>
+
+</div>
+>>>>>>> S
 
     <div class="floating-button-container">
         <a href="tel:08061944089" class="floating-contact-button-vertical">

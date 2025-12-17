@@ -8,7 +8,13 @@ Rails.application.routes.draw do
   
   get 'pets/urugawa', to: 'pets#urugawa'
   
+<<<<<<< HEAD
   get 'pets/iineitiran', to: 'pets#iineitiran'
+=======
+  #inquiryを追加
+  #get 'pets/inquiry', to: 'pets#inquiry'
+  get 'inquiries/inquiry', to: 'inquiries#inquiry'
+>>>>>>> S
   
 
 
@@ -17,12 +23,14 @@ Rails.application.routes.draw do
       post 'like'
     end
     resources :meetings, only: [:new, :create]
+    resources :comments, only: :create
   end
 
 
   resources :inquiries, only: [:new, :create]
   
   namespace :admin do #これをつかうことで新しくモデル作らずとも管理画面でＰＥＴのモデルを使えるで
+<<<<<<< HEAD
    
    
    
@@ -36,6 +44,16 @@ Rails.application.routes.draw do
      end
     end
    resources :meetings
+=======
+   resources :pets
+   #adminのinquireを追加
+   resources :inquiries, only: [:index, :show, :destroy]
   end
+  
+  resources :surveys do
+    resources :responses
+>>>>>>> S
+  end
+
 
 end

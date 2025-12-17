@@ -1,0 +1,4 @@
+var btn = document.getElementById("like-btn-<%= @pet.id %>");
+if (btn) {
+  btn.innerHTML = <%= @liked ? "'💖 いいね済み'" : "'❤'" %>;
+}
