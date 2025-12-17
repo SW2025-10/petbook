@@ -59,7 +59,7 @@ class Admin::PetsController < ApplicationController
    pet.destroy
    redirect_to '/admin/pets'
   end
-<<<<<<< HEAD
+
   def hukusei
     pet = Pet.find(params[:id])
     @pet = Pet.new
@@ -95,11 +95,11 @@ class Admin::PetsController < ApplicationController
   
    # @chart_data : [12, 5, 18, ...]
    @chart_data = daily_counts_hash.values 
-=======
+  end
   #inquiryを追加
   def inquiry
     #@inquiry = Inquiry.new
->>>>>>> S
+
   end
 end
 

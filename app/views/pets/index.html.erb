@@ -345,7 +345,7 @@
             </div>
 
             <div class="sidebar-box user-menu">
-                <h3 class="sidebar-title">マイページ</h3>
+                <h3 class="sidebar-title">メニュー</h3>
                 <ul>
                     <% if user_signed_in? %>
                         <li>ようこそ、ユーザー様</li>
@@ -354,7 +354,24 @@
                         <li><%= link_to '新規登録', new_user_registration_path %></li>
                         <li><%= link_to 'ログイン', new_user_session_path %></li>
                     <% end %>
+                    <li style="margin-top:10px; border-top:1px dashed #ddd; padding-top:10px;">
+                        <%= link_to "✉️ お問い合わせ", inquiries_inquiry_path %>
+                    </li>
                 </ul>
+            </div>
+
+            <div class="sidebar-box" style="background-color: #fff0f0; border: 1px solid var(--accent-color);">
+                <h3 class="sidebar-title" style="border-bottom-color: var(--accent-color);">ペット適性診断</h3>
+                <% if @survey.present? %>
+                    <p style="font-size: 12px; color: var(--text-sub); margin-bottom: 10px;">
+                        あなたにぴったりのパートナーを見つけましょう！
+                    </p>
+                    <%= link_to "診断をスタート", new_survey_response_path(@survey), 
+                        class: "btn-detail", 
+                        style: "background: var(--accent-color); display: block; text-decoration: none; color: white; text-align: center; border-radius: 4px; padding: 10px 0;" %>
+                <% else %>
+                    <p style="font-size: 12px; color: #999;">ただいま準備中です</p>
+                <% end %>
             </div>
 
             <div class="sidebar-box" style="text-align: center; background-color: #fff8e1; border: 1px dashed orange;">
@@ -451,18 +468,6 @@
 
         </main>
     </div>
-<<<<<<< HEAD
-=======
-    <hr>
-    <br>
-  <% end %>
-  <h2><%= link_to "お問い合わせ", inquiries_inquiry_path %></h2>
-  <% if @survey.present? %>
-    <%= link_to "ペット適性診断を受ける", new_survey_response_path(@survey), class: "btn btn-primary" %>
-  <% end %>
-
-</div>
->>>>>>> S
 
     <div class="floating-button-container">
         <a href="tel:08061944089" class="floating-contact-button-vertical">
