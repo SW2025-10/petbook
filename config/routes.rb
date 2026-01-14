@@ -54,6 +54,13 @@ Rails.application.routes.draw do
     resources :responses
 
   end
+  namespace :api do
+      resources :pets, only: [] do
+        collection do
+          post :recommend
+        end
+      end
+    end
 
 
 end

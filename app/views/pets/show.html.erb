@@ -91,3 +91,13 @@
     height: 40rem !important;
   }
 </style>
+
+<script>
+  function saveViewHistory(category) {
+    let history = JSON.parse(localStorage.getItem('pet_history') || '[]'); //||でもしなかった場合はくうはくで取り出す仕組み
+    history.unshift(category);//unshiftはpythonでいうところのappend
+    history = history.slice(0, 5);//5行目までにする
+    localStorage.setItem('pet_history', JSON.stringify(history));//JSONでセット
+  }
+  saveViewHistory('<%= @pet.label %>');
+</script>

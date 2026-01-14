@@ -382,6 +382,8 @@
         </aside>
 
         <main class="content">
+            <div id="recommend-section" style="margin-bottom: 30px;">
+    </div>
 
             <% if @pet_search.present? %>
                 <div class="search-result-list" style="margin-bottom: 30px;">
@@ -497,3 +499,49 @@
 
 </body>
 </html>
+<script>
+  async function displayRecommendations() {
+    const history = JSON.parse(localStorage.getItem('pet_history') || '[]');
+    if (history.length === 0) return;
+
+    // パシリ（Fetch）がRailsのAPIに履歴を持っていく
+    const response = await fetch('/api/pets/recommend', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': document.querySelector('meta[name="csrf-token"]').content
+      },
+      body: JSON.stringify({ categories: history })
+    });
+
+    const pets = await response.json();
+    const container = document.getElementById('recommend-section');
+
+    if (pets.length > 0) {
+      // 中身を作成
+      let html = `
+        <h2 style="color: var(--primary-color);">✨ あなたへの特別なおすすめ</h2>
+        <div class="pet-grid">
+      `;
+
+      pets.forEach(pet => {
+        html += `
+          <div class="pet-card">
+            <div class="pet-info">
+              <strong>${pet.name}</strong>
+              <span style="font-size:12px; color:#666;">(${pet.label})</span>
+              <p>¥${pet.price.toLocaleString()}</p>
+              <a href="/pets/${pet.id}" class="detail-link">詳細 ></a>
+            </div>
+          </div>
+        `;
+      });
+
+      html += `</div><hr style="border:0; height:1px; background:#ddd; margin:30px 0;">`;
+      container.innerHTML = html;
+    }
+  }
+
+  // ページ読み込み時に実行
+  displayRecommendations();
+</script>
