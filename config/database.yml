@@ -30,8 +30,8 @@ production:
     encoding: unicode
     pool: 5
     # ↓以下の2行は、後でRenderでデータベースを作った後の名前に書き換えます
-    database: mysite_59i4
-    username: mysite_59i4_user
+    database: petbook1
+    username: petbook1_user
     # 秘密の情報は環境変数（ENV）から読み込むようにします
     password: <%= ENV['MYSITE_DATABASE_PASSWORD'] %>
     url: <%= ENV['DATABASE_URL'] %>
